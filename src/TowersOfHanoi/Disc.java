@@ -13,7 +13,7 @@ import java.awt.Color;
  */
 public class Disc {
     private final int size;
-    private final int color;
+    private int color;
     private final int[] finalLocation;
     public Disc(int s) {
         size = s;
@@ -46,6 +46,34 @@ public class Disc {
         finalLocation = f;
     }
     public int manhattan(int i, int j){
-        return Math.abs(i - finalLocation[0]) + Math.abs(j - finalLocation[1]);
+        return Math.abs(i - getFinalLocation()[0]) + Math.abs(j - getFinalLocation()[1]);
+    }
+
+    /**
+     * @return the size
+     */
+    public int getSize() {
+        return size;
+    }
+
+    /**
+     * @return the color
+     */
+    public int getColor() {
+        return color;
+    }
+
+    /**
+     * @param color the color to set
+     */
+    public void setColor(int color) {
+        this.color = color;
+    }
+
+    /**
+     * @return the finalLocation
+     */
+    public int[] getFinalLocation() {
+        return finalLocation;
     }
 }
