@@ -29,6 +29,7 @@ public class HanoiState extends Node{
         super(-1, -1, false);
         this.solution = false;
         this.Pegs = pegs;
+        this.Pegs = new Peg[] {new Peg(), new Peg(), new Peg()};
     }
     
     public HanoiState(int x, int y, boolean origin, int n) {
@@ -74,8 +75,23 @@ public class HanoiState extends Node{
     }
     
     @Override
-    public void display() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void display() {//int j = 0; j < this.Pegs[i].n(); j++
+        for (int i = this.Pegs[0].n(); i >= 0 ; i--) {
+            for (int j = 0; j < this.Pegs.length; j++) {
+                Disc D = null;
+                try {
+                    D = this.Pegs[j].get(i);
+                } catch (Exception e) {
+                }
+                if (D == null) {
+                    System.out.print("  |  ");
+                } else {
+                    System.out.print("  " + D.getSize() + "  ");
+                }
+            }
+            System.out.println("");
+        }
+        System.out.println("===============");
     }
 
     @Override
@@ -102,17 +118,17 @@ public class HanoiState extends Node{
             HanoiState Altered = new HanoiState(this.Pegs.clone());
             if (i != 0) {
                 Altered.moveDisc(D, 0);
-                Retable.add(Altered);
+                Retable.add(new HanoiState(Altered.Pegs.clone()));
                 Altered.moveDisc(D, i);
             }
             if (i != 1) {
                 Altered.moveDisc(D, 1);
-                Retable.add(Altered);
+                Retable.add(new HanoiState(Altered.Pegs.clone()));
                 Altered.moveDisc(D, i);
             }
             if (i != 2) {
                 Altered.moveDisc(D, 2);
-                Retable.add(Altered);
+                Retable.add(new HanoiState(Altered.Pegs.clone()));
                 Altered.moveDisc(D, i);
             }
         }
@@ -149,7 +165,7 @@ public class HanoiState extends Node{
         return new int[] {x, Pegs[x].indexOf(Desired)};
     }
     
-    private void moveDisc(Disc D, int pegdex){
+    protected void moveDisc(Disc D, int pegdex){
         int current = findDisc(D)[0];
         int pos = findDisc(D)[1];
         if (Pegs[current].remove(D)) {

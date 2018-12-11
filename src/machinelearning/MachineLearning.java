@@ -6,6 +6,7 @@
 package machinelearning;
 
 import TowersOfHanoi.HanoiState;
+import TowersOfHanoi.UnitTest;
 
 /**
  *
@@ -17,7 +18,10 @@ public class MachineLearning {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
+        UnitTest Nevada = new UnitTest();
+        if (Nevada.runAllTests()) {
+            return;
+        }
     }
     
 }
