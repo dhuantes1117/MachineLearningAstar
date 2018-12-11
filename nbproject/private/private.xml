@@ -5,12 +5,12 @@
         <group>
             <file>file:/home/dhuant/NetBeansProjects/MachineLearning/src/AStar/State.java</file>
             <file>file:/home/dhuant/NetBeansProjects/MachineLearning/src/AStar/Edge.java</file>
-            <file>file:/home/dhuant/NetBeansProjects/MachineLearning/src/TowersOfHanoi/Disc.java</file>
             <file>file:/home/dhuant/NetBeansProjects/MachineLearning/src/AStar/Cluster.java</file>
             <file>file:/home/dhuant/NetBeansProjects/MachineLearning/src/AStar/Node.java</file>
             <file>file:/home/dhuant/NetBeansProjects/MachineLearning/src/TowersOfHanoi/HanoiState.java</file>
             <file>file:/home/dhuant/NetBeansProjects/MachineLearning/src/TowersOfHanoi/Peg.java</file>
             <file>file:/home/dhuant/NetBeansProjects/MachineLearning/src/machinelearning/MachineLearning.java</file>
+            <file>file:/home/dhuant/NetBeansProjects/MachineLearning/src/TowersOfHanoi/UnitTest.java</file>
         </group>
     </open-files>
 </project-private>

@@ -51,7 +51,6 @@ public class UnitTest {
         if (flag) {
             throw new Exception("createState did not correctly initialize discs of decreasing size on Peg 0");
         }
-        Towers.display();
     }
     
     public void moveDisc() throws Exception{
@@ -72,5 +71,23 @@ public class UnitTest {
         } else {
             throw new Exception("moveDisc did not remove a disc from peg zero");
         }
+    }
+    //figure out how to have all discs read thieir final state from "Solution" Node, but move
+    //away from actually comparing if possible. Look into organizing nodes in XY coordinate system
+    //and combining display() of multiple states. Think of problems you couldn't code by hand
+    public void checkPermutations() throws Exception {
+        
+    }
+    
+    public void navigablePermutations() throws Exception {
+        
+    }
+    
+    public void expandToDestination() throws Exception {
+        
+    }
+    
+    public void updateMap() throws Exception {
+        
     }
 }
