@@ -5,13 +5,14 @@
  */
 package AStar;
 
+import java.io.Serializable;
 import java.util.HashSet;
 
 /**
  *
  * @author dhuant
  */
-public interface State {
+public interface State{
     public void display();
     public boolean isSolution();
     public void permute();

@@ -5,6 +5,7 @@
  */
 package AStar;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -16,8 +17,8 @@ import java.util.function.Predicate;
  *
  * @author dhuant
  */
-public class Cluster extends ArrayList<Node>{
-    private final Comparator<Node> c = new Comparator<Node>() {
+public class Cluster extends ArrayList<Node> implements Serializable{
+    private transient final Comparator<Node> c = new Comparator<Node>() {
         @Override
         public int compare(Node i, Node j) {
             //calculate f(n) = g(n) + h(n)
@@ -35,9 +36,9 @@ public class Cluster extends ArrayList<Node>{
             }
         }
     };
-    PriorityQueue<Node> OPEN = new PriorityQueue<>(c);
-    HashSet<Node> CLOSED = new HashSet<>();
-    Predicate<Node> inCLOSED = new Predicate<Node>() {
+    transient PriorityQueue<Node> OPEN = new PriorityQueue<>(c);
+    transient HashSet<Node> CLOSED = new HashSet<>();
+    transient Predicate<Node> inCLOSED = new Predicate<Node>() {
             @Override
             public boolean test(Node N) {
                 return CLOSED.contains(N);
@@ -128,7 +129,9 @@ public class Cluster extends ArrayList<Node>{
 
     public void openViable(Node Curr, Node Dest) {
         ArrayList<Node> ApplicableNeighbors = Curr.getNeighborNodes();
-        ApplicableNeighbors.removeIf(inCLOSED);
+        for (Node ClosedUpon : CLOSED) {
+            ApplicableNeighbors.remove(ClosedUpon);
+        }
         for (Node N : ApplicableNeighbors) {
             N.updateg();
             if (OPEN.contains(N)) {

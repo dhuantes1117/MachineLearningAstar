@@ -6,6 +6,7 @@
 package TowersOfHanoi;
 
 import AStar.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -13,7 +14,7 @@ import java.util.HashSet;
  *
  * @author dhuant
  */
-public class HanoiState extends Node{
+public class HanoiState extends Node implements Serializable{
     private final boolean solution;
     private int n;
     private Peg[] Pegs;

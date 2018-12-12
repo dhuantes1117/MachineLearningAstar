@@ -6,7 +6,7 @@
 package TowersOfHanoi;
 
 import java.awt.Color;
-
+import AStar.*;
 /**
  *
  * @author dhuant

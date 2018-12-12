@@ -5,7 +5,9 @@
  */
 package AStar;
 
-public class Edge {
+import java.io.Serializable;
+
+public class Edge implements Serializable{
 
     private final int g;
     private final Node connection;

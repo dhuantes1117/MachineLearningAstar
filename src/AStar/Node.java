@@ -58,6 +58,9 @@ abstract public class Node implements State{
     //in order to maintain the changes and edits that are made, as well as having an easy to use addition
     //method as truly, the machine learning part should mean that this program creates and continually adds to
     //this Cluster
+    public Node(){
+        //Assumably for the purpose of serialization
+    }
     
     public Node(int x, int y, boolean origin) {
         this.Name = "Bucharest";

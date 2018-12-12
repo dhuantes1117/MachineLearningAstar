@@ -6,12 +6,13 @@
 package TowersOfHanoi;
 
 import java.awt.Color;
+import java.io.Serializable;
 
 /**
  *
  * @author dhuant
  */
-public class Disc {
+public class Disc implements Serializable{
     private final int size;
     private int color;
     private final int[] finalLocation;
