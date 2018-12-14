@@ -7,6 +7,7 @@ package TowersOfHanoi;
 
 import java.awt.Color;
 import AStar.*;
+import java.util.ArrayList;
 /**
  *
  * @author dhuant
@@ -20,9 +21,10 @@ public class UnitTest {
         try {
             createState();
             moveDisc();
+            checkPermutations();
         } catch (Exception e) {
             System.out.println("UnitTest has encountered an error:\n" + e.getMessage());
-            e.printStackTrace();
+            //e.printStackTrace();
             return true;
         }
         System.out.println("Unit Test has succesfully completed, no errors were detected");
@@ -76,7 +78,27 @@ public class UnitTest {
     //away from actually comparing if possible. Look into organizing nodes in XY coordinate system
     //and combining display() of multiple states. Think of problems you couldn't code by hand
     public void checkPermutations() throws Exception {
-        
+        HanoiState S1 = new HanoiState(3, 0);
+        S1.setName("S1");
+        S1.permute();
+        ArrayList<Node> ActualPermutations = S1.getNeighborNodes();
+        System.out.println("Actual Permutations is " + ActualPermutations.size() + " long");
+        ArrayList<Node> TheoreticalPermutations = new ArrayList<>();
+        HanoiState First = new HanoiState(3, 0);
+        HanoiState Second = new HanoiState(3, 0);
+        First.move(0, 1);
+        Second.move(0, 2);
+        TheoreticalPermutations.add(First);
+        TheoreticalPermutations.add(Second);
+        if (ActualPermutations.size() != TheoreticalPermutations.size()) {
+            throw new Exception("Permuated State was not expanded correctly:\n"+
+                    "Size of Theoretical: " + TheoreticalPermutations.size() +
+                    "     Size of Actual: " + ActualPermutations.size());
+        }
+        if (!ActualPermutations.containsAll(TheoreticalPermutations)) {
+            throw new Exception("Permuated State was not expanded correctly:\n" +
+                        "One or more elements in Theoretical do not match Actual");
+        }
     }
     
     public void navigablePermutations() throws Exception {

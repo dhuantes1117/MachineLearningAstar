@@ -48,7 +48,7 @@ abstract public class Node implements State{
             }
         }
     };
-    private PriorityQueue<Edge> Neighbors;
+    private PriorityQueue<Edge> Neighbors = new PriorityQueue<Edge>(c);
     private TreeSet<Edge> NeighborsTree;
     //Building a map -> a treeset would ensure that no nodes are duplicated, as well as
     //allowing for Cluster.connect to act without checks
@@ -227,10 +227,15 @@ abstract public class Node implements State{
             B.addNeighbor(new Edge(this, distance));
         }
     }
+    
     public void connect(Node B, int distance){
+        //Its not adding the second connection because it thinks it is the same node
         if (!this.getNeighborNodes().contains(B) && !B.getNeighborNodes().contains(this)) {
             this.addNeighbor(new Edge(B, distance));
             B.addNeighbor(new Edge(this, distance));
+        } else {
+            this.getNeighborNodes().forEach((N) -> System.out.println(N.getName()));
+            System.out.println(B.getName());
         }
     }
     //Watch Forever Amazon Prime

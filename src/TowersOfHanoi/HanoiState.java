@@ -15,6 +15,7 @@ import java.util.HashSet;
  * @author dhuant
  */
 public class HanoiState extends Node implements Serializable{
+    private String Name;
     private final boolean solution;
     private int n;
     private Peg[] Pegs;
@@ -26,11 +27,24 @@ public class HanoiState extends Node implements Serializable{
     //is modified and/or done away with, and at least in the case of Hanoi where each move would elicit
     //a g cost of 1, the only true use of an x and a y would be for the purpose of
     //displaying the states in a semi-organized fashion
+    public HanoiState(int n, int pegToFill){
+        this.n = n;
+        this.solution = false;
+        this.Pegs = new Peg[] {new Peg(n), new Peg(n), new Peg(n)};
+        Pegs[pegToFill].fill();
+    }
+    
     public HanoiState(Peg[] pegs) {
         super(-1, -1, false);
         this.solution = false;
         this.Pegs = pegs;
-        this.Pegs = new Peg[] {new Peg(), new Peg(), new Peg()};
+    }
+    
+    public HanoiState(Peg[] pegs, String name) {
+        super(-1, -1, false);
+        this.solution = false;
+        this.Pegs = pegs;
+        this.Name = name;
     }
     
     public HanoiState(int x, int y, boolean origin, int n) {
@@ -47,11 +61,6 @@ public class HanoiState extends Node implements Serializable{
     
     public HanoiState(String Name, int x, int y, boolean origin) {
         super(Name, x, y, origin);
-        this.solution = false;
-    }
-    
-    public HanoiState(int x, int y) {
-        super(x, y);
         this.solution = false;
     }
     
@@ -113,29 +122,40 @@ public class HanoiState extends Node implements Serializable{
         //altered object as a new copy that doesn't utitlize clone, but instead uses
         //'new' and a cloned version of Pegs, as Pegs is an array and it immutable
         //so using clone is important
-        for (int i = 0; i < Pegs.length; i++) {
-            Disc D = Pegs[i].get(Pegs[i].size() - 1);
-            Tops.add(D);
-            HanoiState Altered = new HanoiState(this.Pegs.clone());
+        HanoiState Altered = new HanoiState(this.Pegs.clone());
+         for (int i = 0; i < Pegs.length; i++) {
             if (i != 0) {
-                Altered.moveDisc(D, 0);
-                Retable.add(new HanoiState(Altered.Pegs.clone()));
-                Altered.moveDisc(D, i);
+                    Altered.display();
+                if (Altered.moveDisc(i, 0)) {
+                    Altered.display();
+                    Retable.add(new HanoiState(Altered.Pegs.clone(), i+"to0"));
+                    System.out.println("Size of Retable is " + Retable.size());
+                    Altered.moveDisc(0, i);
+                }
             }
             if (i != 1) {
-                Altered.moveDisc(D, 1);
-                Retable.add(new HanoiState(Altered.Pegs.clone()));
-                Altered.moveDisc(D, i);
+                    Altered.display();
+                if (Altered.moveDisc(i, 1)) {
+                    Altered.display();
+                    Retable.add(new HanoiState(Altered.Pegs.clone(), i+"to1"));
+                    System.out.println("Size of Retable is " + Retable.size());
+                    Altered.moveDisc(1, i);
+                }
             }
             if (i != 2) {
-                Altered.moveDisc(D, 2);
-                Retable.add(new HanoiState(Altered.Pegs.clone()));
-                Altered.moveDisc(D, i);
+                    Altered.display();
+                if (Altered.moveDisc(i, 2)) {
+                    Altered.display();
+                    Retable.add(new HanoiState(Altered.Pegs.clone(), i+"to2"));
+                    System.out.println("Size of Retable is " + Retable.size());
+                    Altered.moveDisc(2, i);
+                }
             }
         }
         for (HanoiState option : Retable) {
             this.connect(option, 1);
         }
+        System.out.println("Permuted has " + this.getNeighbors().size() + " neighbors");
     }
 
     @Override
@@ -166,7 +186,7 @@ public class HanoiState extends Node implements Serializable{
         return new int[] {x, Pegs[x].indexOf(Desired)};
     }
     
-    protected void moveDisc(Disc D, int pegdex){
+    protected boolean moveDisc(Disc D, int pegdex){
         int current = findDisc(D)[0];
         int pos = findDisc(D)[1];
         if (Pegs[current].remove(D)) {
@@ -179,6 +199,63 @@ public class HanoiState extends Node implements Serializable{
                 Pegs[current].set(pos, D);
             }
         }
+        return true;
     }
     
+    protected boolean moveDisc(int begindex, int endex){
+        try {
+            Disc D = this.Pegs[begindex].get(this.Pegs[begindex].size() - 1);
+            this.Pegs[begindex].remove(D);
+            return this.Pegs[endex].add(D);
+        } catch (NullPointerException e) {
+            //System.out.println("NullPointed!");
+            return false;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //System.out.println("OutOfBounded!");
+            return false;
+        }
+        
+    }
+    
+    @Override
+    public boolean equals(Object O) {
+        HanoiState S2;
+        try {
+            S2 = (HanoiState) O;
+        } catch (ClassCastException e) {
+            return false;
+        }
+        if (S2.Pegs.length != this.Pegs.length) {
+            return false;
+        }
+        for (int i = 0; i < this.Pegs.length; i++) {
+            System.out.println("S2's " + i + "th peg has " + S2.Pegs[i].size() + " discs while");
+            System.out.println("this's " + i + "th peg has " + this.Pegs[i].size() + " discs");
+            if (S2.Pegs[i].size() != this.Pegs[i].size()) {
+                return false;
+            }
+        }
+        for (int i = 0; i < this.Pegs.length; i++) {
+            for (int j = 0; j < this.Pegs[i].size(); j++) {
+                if (this.Pegs[i].get(j).getSize() != S2.Pegs[i].get(j).getSize()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @return the Name
+     */
+    public String getName() {
+        return Name;
+    }
+
+    /**
+     * @param Name the Name to set
+     */
+    public void setName(String Name) {
+        this.Name = Name;
+    }
 }
