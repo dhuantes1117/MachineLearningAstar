@@ -220,22 +220,23 @@ abstract public class Node implements State{
         return -1;
     }
     
-    public void connect(Node B){
+    public boolean connect(Node B){
         if (!this.getNeighborNodes().contains(B) && !B.getNeighborNodes().contains(this)) {
             int distance = (int) Math.round(Math.hypot(B.x() - this.x(), B.y() - this.y()));
             this.addNeighbor(new Edge(B, distance));
             B.addNeighbor(new Edge(this, distance));
+            return true;
         }
+        return false;
     }
     
-    public void connect(Node B, int distance){
-        //Its not adding the second connection because it thinks it is the same node
+    public boolean connect(Node B, int distance){
         if (!this.getNeighborNodes().contains(B) && !B.getNeighborNodes().contains(this)) {
             this.addNeighbor(new Edge(B, distance));
             B.addNeighbor(new Edge(this, distance));
+            return true;
         } else {
-            this.getNeighborNodes().forEach((N) -> System.out.println(N.getName()));
-            System.out.println(B.getName());
+            return false;
         }
     }
     //Watch Forever Amazon Prime

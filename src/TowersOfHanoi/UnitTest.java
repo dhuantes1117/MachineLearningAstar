@@ -82,12 +82,11 @@ public class UnitTest {
         S1.setName("S1");
         S1.permute();
         ArrayList<Node> ActualPermutations = S1.getNeighborNodes();
-        System.out.println("Actual Permutations is " + ActualPermutations.size() + " long");
         ArrayList<Node> TheoreticalPermutations = new ArrayList<>();
         HanoiState First = new HanoiState(3, 0);
         HanoiState Second = new HanoiState(3, 0);
-        First.move(0, 1);
-        Second.move(0, 2);
+        First.moveDisc(0, 1);
+        Second.moveDisc(0, 2);
         TheoreticalPermutations.add(First);
         TheoreticalPermutations.add(Second);
         if (ActualPermutations.size() != TheoreticalPermutations.size()) {

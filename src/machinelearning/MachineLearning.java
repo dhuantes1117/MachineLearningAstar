@@ -50,6 +50,7 @@ public class MachineLearning {
             System.out.println("Failure");
             e.printStackTrace();
         }*/
+        /*
         Cluster RememberMe = new Cluster();
         try {
             ObjectInputStream In = new ObjectInputStream(new FileInputStream("maps/blank.txt"));
@@ -63,6 +64,7 @@ public class MachineLearning {
             e.printStackTrace();
         }
         RememberMe.get(0).display();
+        */
     }
     
 }
